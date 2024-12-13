@@ -69,6 +69,8 @@ def build_parser():
     parser.add_argument('--ld', help='Linker to use')
     parser.add_argument('--cflags', help='Additional C compiler flags to use')
     parser.add_argument('--ldflags', help='Additional linker flags to use')
+    parser.add_argument('--ld_dir', help='Custom Linker File Directory')
+    parser.add_argument('--default_ld', help="Fallback linker file if custom linker file is not available for the benchmark")
     parser.add_argument(
         '--env',
         help='additional environment vars, format <V>=<val> [,<V>=<value>]...',
@@ -276,7 +278,9 @@ def populate_user_flags(conf, args):
         conf['cflags'] = args.cflags.split()
     if args.ldflags:
         conf['ldflags'] = args.ldflags.split()
-
+    if args.ld_dir:
+        conf['ld_dir'] = args.ld_dir.split()
+        conf['default_ld'] = args.default_ld.split()
     return conf
 
 
@@ -410,6 +414,9 @@ def set_parameters(args):
     if 'ld' not in gp:
         gp['ld'] = gp['cc']
 
+    if 'ld_dir' in conf:
+        gp['ld_dir'] = conf["ld_dir"]
+        gp['default_ld'] = conf["default_ld"]
     # Add our own flags to the command line, then validate the tools
     add_internal_flags()
     validate_tools()
@@ -634,8 +641,18 @@ def create_link_binlist(abs_bd):
 def create_link_arglist(bench, binlist):
     """Create the argument list for linking benchmark, "bench", from the binaries
        in "binlist"."""
+    linker_file = ""
     arglist = [gp['ld']]
+    if (gp['ld_dir'] != None):
+        for file in os.listdir(gp['ld_dir'][0]):
+            file_path = os.path.join(gp['ld_dir'][0], file)
+            if(os.path.isfile(file_path) and f"{bench}.ld" in file_path):
+                #print("Linker boi ",file_path)
+                linker_file = f"-T{file_path}"
+    if len(linker_file) == 0:
+        linker_file = f"-T{0}".format(gp["default_ld"])
     arglist.extend(gp['ldflags'])
+    arglist.extend([linker_file])
     arglist.extend(gp['ld_output_pattern'].format(bench).split())
     arglist.extend(binlist)
     arglist.extend(gp['user_libs'])

@@ -52,7 +52,6 @@
 void
 initialise_board ()
 {
-  
   InitCycleCounter();
   ResetCycleCounter();
 }

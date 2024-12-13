@@ -45,7 +45,7 @@ from embench_core import output_format
 
 def get_common_args():
     """Build a parser for all the arguments"""
-    parser = argparse.ArgumentParser(description='Compute the size benchmark')
+    parser = argparse.ArgumentParser(description='Compute the speed benchmark')
 
     parser.add_argument(
         '--builddir',
@@ -193,6 +193,7 @@ def benchmark_speed(bench, target_args):
 
     if os.path.isfile(appexe):
         arglist = build_benchmark_cmd(bench, target_args)
+        #log.warning(f'ARGLIST: {arglist}\n')
         try:
             res = subprocess.run(
                 arglist,
@@ -315,8 +316,8 @@ def collect_data(benchmarks, remnant):
                     log.info(f'      "{bench}" : {output},')
         log.info('    },')
     elif gp['output_format'] == output_format.TEXT:
-        log.info('Benchmark           Speed')
-        log.info('---------           -----')
+        log.info('Benchmark           Speed (cycles)         Approx Time (seconds)')
+        log.info('---------           --------------         ----------------------')
         for bench in benchmarks:
             output = ''
             if (bench in raw_data and raw_data[bench] != 0.0):
@@ -325,7 +326,11 @@ def collect_data(benchmarks, remnant):
                 else:
                     output = f'  {rel_data[bench]:6.2f}'
             # Want relative results (the default). Only use non-zero values.
-            log.info(f'{bench:15}  {output:8}')
+            if len(output) > 0:
+                time = int("".join(output.split(',')))/400000
+            else:
+                time = f"Timeout (t={gp['timeout']} seconds)"
+            log.info(f'{bench:20}  {output:23}  {str(time):20}')
     elif gp['output_format'] == output_format.BASELINE:
         log.info('{')
         for bench in benchmarks:

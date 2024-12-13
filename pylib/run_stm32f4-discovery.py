@@ -27,7 +27,7 @@ import re
 
 from embench_core import log
 
-cpu_mhz = 1
+cpu_mhz = 8
 
 def get_target_args(remnant):
     """Parse left over arguments"""
@@ -36,7 +36,7 @@ def get_target_args(remnant):
     parser.add_argument(
         '--gdb-command',
         type=str,
-        default='gdb',
+        default='arm-none-eabi-gdb',
         help='Command to invoke GDB',
     )
     parser.add_argument(
@@ -64,6 +64,7 @@ def build_benchmark_cmd(bench, args):
     cmd = [f'{args.gdb_command}']
     gdb_comms = [
         'set confirm off',
+        'set arm force-mode thumb',
         'file {0}',
         'target extended-remote :4242',
         'load',
@@ -76,7 +77,7 @@ def build_benchmark_cmd(bench, args):
         'continue',
         'print /u *0xe0001004',
         'continue',
-        'print /x $a0',
+        'print /x $r0',
         'quit',
     ]
 
@@ -92,8 +93,9 @@ def decode_results(stdout_str, stderr_str):
     # Return code is in standard output. We look for the string that means we
     # hit a breakpoint on _exit, then for the string returning the value.
     rcstr = re.search(
-        'Breakpoint 3 at.*exit\.c.*\$1 = (\d+)', stdout_str, re.S
+        'Breakpoint 3 at*', stdout_str, re.S
     )
+    #log.debug(f"Sanity Check: Return Code:{rcstr.group(1)}")
     if not rcstr:
         log.debug('Warning: Failed to find return code')
         return 0.0
