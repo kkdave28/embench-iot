@@ -643,7 +643,7 @@ def create_link_arglist(bench, binlist):
        in "binlist"."""
     linker_file = ""
     arglist = [gp['ld']]
-    if (gp['ld_dir'] != None):
+    if (gp['ld_dir'] != ""):
         for file in os.listdir(gp['ld_dir'][0]):
             file_path = os.path.join(gp['ld_dir'][0], file)
             if(os.path.isfile(file_path) and f"{bench}.ld" in file_path):
