@@ -258,6 +258,7 @@ def collect_data(benchmarks, remnant):
 
     # Parse target specific args
     target_args = get_target_args(remnant)
+    #print("TARGET_ARGS = ", target_args)
 
     # Collect data
     successful = True
@@ -367,7 +368,7 @@ def main():
     # Find the benchmarks
     benchmarks = find_benchmarks()
     log_benchmarks(benchmarks)
-
+    print("COMPILATION DONE!")
     # Collect the speed data for the benchmarks. Pass any remaining args.
     raw_data, rel_data = collect_data(benchmarks, remnant)
 

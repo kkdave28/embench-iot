@@ -737,7 +737,7 @@ def main():
     # Find the benchmarks
     benchmarks = find_benchmarks()
     log_benchmarks(benchmarks)
-
+    #print(gp)
     # Establish other global parameters
     set_parameters(args)
     log_parameters()
@@ -766,6 +766,7 @@ def main():
 
     if successful:
         log.info('All benchmarks built successfully')
+        input("Press any key to start running benchmark!")
 
 
 # Make sure we have new enough Python and only run if this is the main package
