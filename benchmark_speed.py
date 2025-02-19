@@ -317,7 +317,7 @@ def collect_data(benchmarks, remnant):
                     log.info(f'      "{bench}" : {output},')
         log.info('    },')
     elif gp['output_format'] == output_format.TEXT:
-        log.info('Benchmark           Speed (cycles)         Approx Time (seconds)')
+        log.info('Benchmark           Speed (msecs)         Cycles')
         log.info('---------           --------------         ----------------------')
         for bench in benchmarks:
             output = ''
