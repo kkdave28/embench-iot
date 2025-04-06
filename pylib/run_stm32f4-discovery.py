@@ -27,7 +27,7 @@ import re
 
 from embench_core import log
 
-cpu_mhz = 8
+cpu_mhz = 1
 
 def get_target_args(remnant):
     """Parse left over arguments"""
@@ -60,7 +60,7 @@ def build_benchmark_cmd(bench, args):
        namespace with target specific arguments"""
     global cpu_mhz
     cpu_mhz = args.cpu_mhz
-
+    
     cmd = [f'{args.gdb_command}']
     gdb_comms = [
         'set confirm off',
@@ -95,7 +95,7 @@ def decode_results(stdout_str, stderr_str):
     rcstr = re.search(
         'Breakpoint 3 at*', stdout_str, re.S
     )
-    #log.debug(f"Sanity Check: Return Code:{rcstr.group(1)}")
+    log.debug(f"Sanity Check: Return Code:{stdout_str}")
     if not rcstr:
         log.debug('Warning: Failed to find return code')
         return 0.0
