@@ -23,7 +23,7 @@
 /* Seed for the random number generator */
 
 static long int seed = 0;
-
+// volatile int gabagool = 0xBEEFCAFE;
 /* Heap records and sane initial values */
 
 static void *heap_ptr = NULL;

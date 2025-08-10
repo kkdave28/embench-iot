@@ -749,11 +749,12 @@ def main():
     set_environ()
 
     # Track success
-    successful = compile_support()
-    if successful:
-        log.debug('Compilation of support files successful')
+    
 
     for bench in benchmarks:
+        successful = compile_support()
+        if successful:
+            log.debug(f'Compilation of support files for {bench} benchmark successful')
         res = compile_benchmark(bench)
         successful &= res
         if res:
@@ -763,6 +764,7 @@ def main():
             if res:
                 log.debug('Linking of benchmark "{bench}" successful'.format(bench=bench))
                 log.info(bench)
+        shutil.rmtree(gp['bd_supportdir'])
 
     if successful:
         log.info('All benchmarks built successfully')

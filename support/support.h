@@ -15,6 +15,7 @@
 #ifndef SUPPORT_H
 #define SUPPORT_H
 
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -63,7 +64,7 @@ int verify_benchmark (int res);
 #include "beebsc.h"
 
 #endif /* SUPPORT_H */
-
+// static volatile int gabagool = 0xBEEFCAFE;
 /*
    Local Variables:
    mode: C

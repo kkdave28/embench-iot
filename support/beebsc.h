@@ -23,7 +23,7 @@
 
 /* Common understanding of a "small value" (epsilon) for floating point
    comparisons. */
-
+// extern volatile int gabagool;
 #define VERIFY_DOUBLE_EPS 1.0e-13
 #define VERIFY_FLOAT_EPS 1.0e-5
 
@@ -56,7 +56,7 @@ void *realloc_beebs (void *ptr, size_t size);
 void free_beebs (void *ptr);
 #endif /* BEEBSC_H */
 
-
+static volatile int gabagool;
 /*
    Local Variables:
    mode: C

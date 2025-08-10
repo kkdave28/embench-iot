@@ -69,3 +69,4 @@ stop_trigger ()
   ResetCycleCounter();
   DisableCycleCounter();
 }
+// volatile int gabagool = 0xBEEFCAFE;

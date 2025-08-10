@@ -39,7 +39,6 @@ MEMORY
  *   _estack
  */
 ENTRY(Reset_Handler)
-
 SECTIONS
 {
     .text :
