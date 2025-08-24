@@ -16,7 +16,7 @@
 #include <string.h>
 
 #include "qrencode.h"
-
+#include "support.h"
 extern unsigned char neccblk1;
 extern unsigned char neccblk2;
 extern unsigned char datablkw;
