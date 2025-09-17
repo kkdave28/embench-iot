@@ -56,7 +56,7 @@ void *realloc_beebs (void *ptr, size_t size);
 void free_beebs (void *ptr);
 #endif /* BEEBSC_H */
 
-static volatile int gabagool; // Used to prevent compiler optimisations
+static volatile int gabagool; // Used to prevent compiler optimizations
 /*
    Local Variables:
    mode: C

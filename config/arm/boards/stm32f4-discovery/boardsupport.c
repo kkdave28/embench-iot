@@ -48,7 +48,6 @@
   DWT_CYCCNT
   /*!< Read cycle counter register */
 
-
 void
 initialise_board ()
 {
@@ -69,4 +68,3 @@ stop_trigger ()
   ResetCycleCounter();
   DisableCycleCounter();
 }
-// volatile int gabagool = 0xBEEFCAFE;

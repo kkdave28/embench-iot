@@ -19,7 +19,6 @@ int __attribute__ ((used))
 main (int argc __attribute__ ((unused)),
       char *argv[] __attribute__ ((unused)))
 {
-  gabagool = rand_beebs();
   int i;
   volatile int result;
   int correct;
